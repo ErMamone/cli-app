@@ -1,0 +1,10 @@
+2026-07-26 08:01:12 INFO  server started on port 8080
+2026-07-26 08:01:15 INFO  connected to database
+2026-07-26 08:02:03 WARN  slow query detected (1200ms)
+2026-07-26 08:02:45 ERROR failed to process request id=42
+2026-07-26 08:03:10 INFO  request handled id=43
+2026-07-26 08:03:55 ERROR timeout talking to payment service
+2026-07-26 08:04:01 WARN  retrying request id=42
+2026-07-26 08:04:30 INFO  request handled id=42
+2026-07-26 08:05:00 ERROR failed to process request id=42
+2026-07-26 08:05:20 INFO  healthcheck ok

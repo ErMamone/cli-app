@@ -1,0 +1,6 @@
+# Raíz del WORKSPACE: agrupa varios crates que comparten build y dependencias.
+# 'core' es la librería (motor puro), 'cli' es el binario (front-end).
+# En el futuro sumás "wasm" y "web" a esta lista y reusás 'core' sin tocarlo.
+[workspace]
+resolver = "2"
+members = ["core", "cli"]

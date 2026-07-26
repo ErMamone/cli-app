@@ -1,0 +1,12 @@
+[package]
+name = "logstats-core"
+version = "0.1.0"
+edition = "2024"
+
+# OJO: este crate es PURO. No agregues acá dependencias de CLI, archivos ni
+# hilos. Solo lógica que transforma datos (texto -> Reporte).
+
+[dependencies]
+# v3 (US3.4): descomentá para exportar el reporte a JSON.
+# serde = { version = "1", features = ["derive"] }
+# serde_json = "1"

@@ -1,0 +1,13 @@
+[package]
+name = "logstats"
+version = "0.1.0"
+edition = "2024"
+
+# El binario se llamará "logstats" (cargo run lo detecta solo).
+
+[dependencies]
+logstats-core = { path = "../core" }         # el motor
+clap = { version = "4", features = ["derive"] } # parsing de argumentos (US1.1)
+
+# v2 (US2.2): descomentá para paralelizar el procesamiento de archivos.
+# rayon = "1"
