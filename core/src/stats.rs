@@ -11,7 +11,15 @@ use crate::model::Reporte;
 /// [US2.3] PISTA: partí de `Reporte::default()` y sumá total_lineas,
 /// coincidencias y fusioná los HashMap con el idiom `entry().or_insert()`.
 pub fn combinar(reportes: Vec<Reporte>) -> Reporte {
-    todo!("US2.3: fusionar todos los reportes en uno solo")
+    let mut total = Reporte::default();
+
+    for r in reportes {
+        total.total_lineas += r.total_lineas;
+        total.coincidencias += r.coincidencias;
+        total.coincidencias_lineas.extend(r.coincidencias_lineas);
+    }
+
+    total
 }
 
 /// Devuelve los `n` mensajes más frecuentes, de mayor a menor.

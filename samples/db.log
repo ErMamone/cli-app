@@ -1,0 +1,5 @@
+2026-07-26 07:00:00 INFO  database engine started
+2026-07-26 07:05:12 WARN  connection pool at 80% capacity
+2026-07-26 07:06:45 ERROR deadlock detected on table orders
+2026-07-26 07:07:00 INFO  deadlock resolved, retrying transaction
+2026-07-26 07:30:15 WARN  slow query: SELECT * FROM events (2300ms)

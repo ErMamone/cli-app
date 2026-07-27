@@ -8,25 +8,44 @@ mod args;
 mod error;
 mod runner;
 
+use crate::error::AppError;
 use args::Args;
 use clap::Parser;
+use logstats_core::Reporte;
+use std::path::Path;
 use std::process::ExitCode;
 
 // main devuelve ExitCode para poder cortar con código != 0 ante un error (US1.4).
 fn main() -> ExitCode {
     let args = Args::parse();
+    let path = Path::new(&args.ruta);
 
-    // v1: un solo archivo. En v2 acá decidirás archivo vs. directorio.
+    if path.is_file() {
+        is_file_process(&args)
+    } else {
+        if_dir_process(&args)
+    }
+}
+
+fn if_dir_process(args: &Args) -> ExitCode {
+    let resultado = runner::analizar_directorio(&args.ruta, args.filtro.as_deref());
+
+    resultado_reporte(args, resultado)
+}
+
+fn is_file_process(args: &Args) -> ExitCode {
     let resultado = runner::analizar_archivo(&args.ruta, args.filtro.as_deref());
 
+    resultado_reporte(args, resultado)
+}
+
+fn resultado_reporte(args: &Args, resultado: Result<Reporte, AppError>) -> ExitCode {
     match resultado {
         Ok(reporte) => {
-            // [US1.2] Si hubo filtro, mostramos las líneas que coincidieron.
             for linea in &reporte.coincidencias_lineas {
                 println!("{linea}");
             }
 
-            // [US1.3] Resumen final.
             println!("---");
             if args.filtro.is_some() {
                 println!(
@@ -39,7 +58,7 @@ fn main() -> ExitCode {
             ExitCode::SUCCESS
         }
         Err(e) => {
-            eprintln!("Error: {e}"); // usa tu Display de AppError (US1.4)
+            eprintln!("Error: {e}");
             ExitCode::FAILURE
         }
     }

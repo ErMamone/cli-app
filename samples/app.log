@@ -1,0 +1,6 @@
+2026-07-26 09:10:00 INFO  app booting up
+2026-07-26 09:10:02 INFO  loaded 3 plugins
+2026-07-26 09:11:20 ERROR plugin "auth" failed to initialize
+2026-07-26 09:12:05 WARN  cache miss for key user:42
+2026-07-26 09:13:00 INFO  serving on 0.0.0.0:9000
+2026-07-26 09:14:30 ERROR unhandled exception in worker 2
