@@ -13,6 +13,7 @@ pub mod model;
 pub mod parser;
 pub mod stats;
 
+use std::fmt::Debug;
 // Re-exportamos los tipos principales para que el que use la librería escriba
 // `logstats_core::Reporte` en vez de `logstats_core::model::Reporte`.
 pub use model::{LogEntry, Nivel, Reporte};
@@ -25,5 +26,22 @@ pub use model::{LogEntry, Nivel, Reporte};
 /// [US1.3] versión mínima: contar `total_lineas` y `coincidencias`.
 /// [US3.x] después: parsear cada línea y llenar `por_nivel` / `por_mensaje`.
 pub fn analizar(texto: &str, filtro: Option<&str>) -> Reporte {
-    todo!("US1.3: recorrer texto.lines(), contar totales y coincidencias con el filtro")
+    let total_lineas = texto.lines().count();
+
+    // Junto las líneas que contienen el filtro. Si no hay filtro, va vacío.
+    let coincidencias_lineas: Vec<String> = match filtro {
+        Some(patron) => texto
+            .lines()
+            .filter(|linea| linea.contains(patron))
+            .map(|linea| linea.to_string())
+            .collect(),
+        None => Vec::new(),
+    };
+
+    Reporte {
+        total_lineas,
+        coincidencias: coincidencias_lineas.len(), // el conteo sale del Vec
+        coincidencias_lineas,
+        ..Default::default() // rellena por_nivel y por_mensaje con sus defaults
+    }
 }

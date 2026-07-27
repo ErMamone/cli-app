@@ -21,9 +21,21 @@ fn main() -> ExitCode {
 
     match resultado {
         Ok(reporte) => {
-            // [US1.3] TODO: reemplazá este print por una salida linda
-            // (total de líneas, coincidencias, y en v3 el desglose por nivel).
-            println!("{reporte:?}");
+            // [US1.2] Si hubo filtro, mostramos las líneas que coincidieron.
+            for linea in &reporte.coincidencias_lineas {
+                println!("{linea}");
+            }
+
+            // [US1.3] Resumen final.
+            println!("---");
+            if args.filtro.is_some() {
+                println!(
+                    "{} líneas totales, {} coincidencias",
+                    reporte.total_lineas, reporte.coincidencias
+                );
+            } else {
+                println!("{} líneas totales", reporte.total_lineas);
+            }
             ExitCode::SUCCESS
         }
         Err(e) => {

@@ -15,7 +15,10 @@ use logstats_core::Reporte;
 ///     o un `match`) para no filtrar el error crudo de std.
 ///   - Con el texto, llamá a `logstats_core::analizar(&texto, filtro)`.
 pub fn analizar_archivo(ruta: &str, filtro: Option<&str>) -> Result<Reporte, AppError> {
-    todo!("US1.1/1.3: leer el archivo y llamar a core::analizar")
+    let texto = std::fs::read_to_string(ruta)
+        .map_err(|e| AppError::Lectura(e.to_string()))?;
+
+    Ok(logstats_core::analizar(&texto, filtro))
 }
 
 /// v2: lee TODOS los .log de un directorio EN PARALELO y combina los reportes.

@@ -29,6 +29,7 @@ pub struct LogEntry {
 pub struct Reporte {
     pub total_lineas: usize,
     pub coincidencias: usize,
+    pub coincidencias_lineas: Vec<String>,    // [US1.2] las líneas que matchearon
     pub por_nivel: HashMap<Nivel, usize>,     // [US3.2]
     pub por_mensaje: HashMap<String, usize>,  // [US3.3]
 }
