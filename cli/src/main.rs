@@ -15,7 +15,6 @@ use logstats_core::Reporte;
 use std::path::Path;
 use std::process::ExitCode;
 
-// main devuelve ExitCode para poder cortar con código != 0 ante un error (US1.4).
 fn main() -> ExitCode {
     let args = Args::parse();
     let path = Path::new(&args.ruta);

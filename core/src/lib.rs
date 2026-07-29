@@ -13,10 +13,12 @@ pub mod model;
 pub mod parser;
 pub mod stats;
 
+use std::collections::HashMap;
 use std::fmt::Debug;
 // Re-exportamos los tipos principales para que el que use la librería escriba
 // `logstats_core::Reporte` en vez de `logstats_core::model::Reporte`.
 pub use model::{LogEntry, Nivel, Reporte};
+use crate::parser::{detectar_nivel, parsear_linea};
 
 /// Analiza el contenido completo de un log y devuelve un Reporte.
 ///
@@ -28,7 +30,6 @@ pub use model::{LogEntry, Nivel, Reporte};
 pub fn analizar(texto: &str, filtro: Option<&str>) -> Reporte {
     let total_lineas = texto.lines().count();
 
-    // Junto las líneas que contienen el filtro. Si no hay filtro, va vacío.
     let coincidencias_lineas: Vec<String> = match filtro {
         Some(patron) => texto
             .lines()
@@ -38,10 +39,18 @@ pub fn analizar(texto: &str, filtro: Option<&str>) -> Reporte {
         None => Vec::new(),
     };
 
+    let mut por_nivel: HashMap<Nivel, usize> = HashMap::new();
+    for linea in texto.lines() {
+        if let Some(entry) = parsear_linea(linea) {
+            *por_nivel.entry(entry.nivel).or_insert(0) += 1;
+        }
+    }
+
     Reporte {
         total_lineas,
-        coincidencias: coincidencias_lineas.len(), // el conteo sale del Vec
+        coincidencias: coincidencias_lineas.len(),
         coincidencias_lineas,
-        ..Default::default() // rellena por_nivel y por_mensaje con sus defaults
+        por_nivel,
+        por_mensaje: parsear_linea()
     }
 }

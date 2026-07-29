@@ -1,15 +1,5 @@
-// ============================================================================
-//  STATS — agregaciones sobre reportes.
-// ============================================================================
-
 use crate::model::Reporte;
 
-/// Combina varios reportes (de distintos archivos) en uno solo.
-/// Se usa en la Iteración 2, cuando procesás muchos archivos en paralelo y
-/// tenés que juntar los resultados parciales.
-///
-/// [US2.3] PISTA: partí de `Reporte::default()` y sumá total_lineas,
-/// coincidencias y fusioná los HashMap con el idiom `entry().or_insert()`.
 pub fn combinar(reportes: Vec<Reporte>) -> Reporte {
     let mut total = Reporte::default();
 
@@ -17,6 +7,7 @@ pub fn combinar(reportes: Vec<Reporte>) -> Reporte {
         total.total_lineas += r.total_lineas;
         total.coincidencias += r.coincidencias;
         total.coincidencias_lineas.extend(r.coincidencias_lineas);
+
     }
 
     total
